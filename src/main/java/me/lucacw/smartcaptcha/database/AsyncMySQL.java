@@ -1,6 +1,7 @@
 package me.lucacw.smartcaptcha.database;
 
 import lombok.Builder;
+import lombok.extern.apachecommons.CommonsLog;
 import me.lucacw.smartcaptcha.config.imp.MySQLDatabaseConfig;
 
 import java.sql.*;
@@ -12,6 +13,7 @@ import java.util.function.Consumer;
  * @author Luca R. at 14.07.2021
  * @project smart-captcha
  */
+@CommonsLog
 public class AsyncMySQL {
 
     private static final ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -26,12 +28,8 @@ public class AsyncMySQL {
     }
 
     public AsyncMySQL(String host, int port, String user, String password, String database) {
-        try {
-            sql = MySQL.builder().host(host).port(port).user(user).password(password).database(database).build();
-            sql.openConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sql = MySQL.builder().host(host).port(port).user(user).password(password).database(database).build();
+        sql.openConnection();
     }
 
     public void update(PreparedStatement statement) {
@@ -149,9 +147,15 @@ public class AsyncMySQL {
             }
         }
 
-        public void openConnection() throws Exception {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true", this.user, this.password);
+        public void openConnection() {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true", this.user, this.password);
+                log.info("MySQL Connection successfully established on " + this.user + "@" + this.host + ":" + this.port);
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+                log.info("MySQL Connection failed to establish.");
+            }
         }
 
         public void closeConnection() {
