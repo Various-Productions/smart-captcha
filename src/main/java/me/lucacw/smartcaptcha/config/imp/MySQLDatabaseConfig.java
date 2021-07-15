@@ -1,6 +1,5 @@
 package me.lucacw.smartcaptcha.config.imp;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**

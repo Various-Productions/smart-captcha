@@ -1,6 +1,7 @@
 package me.lucacw.smartcaptcha.database;
 
 import lombok.Builder;
+import lombok.SneakyThrows;
 import lombok.extern.apachecommons.CommonsLog;
 import me.lucacw.smartcaptcha.config.imp.MySQLDatabaseConfig;
 
@@ -14,10 +15,10 @@ import java.util.function.Consumer;
  * @project smart-captcha
  */
 @CommonsLog
-public class AsyncMySQL {
+public final class AsyncMySQL {
 
-    private static final ExecutorService executor = Executors.newFixedThreadPool(2);
-    private MySQL sql;
+    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(2);
+    private final MySQL sql;
 
     public AsyncMySQL(MySQLDatabaseConfig config) {
         this(config.getHostname(),
@@ -33,7 +34,7 @@ public class AsyncMySQL {
     }
 
     public void update(PreparedStatement statement) {
-        executor.execute(() -> {
+        EXECUTOR.execute(() -> {
             sql.queryUpdate(statement);
             try {
                 statement.close();
@@ -44,11 +45,11 @@ public class AsyncMySQL {
     }
 
     public void update(String statement) {
-        executor.execute(() -> sql.queryUpdate(statement));
+        EXECUTOR.execute(() -> sql.queryUpdate(statement));
     }
 
     public void query(PreparedStatement statement, Consumer<ResultSet> consumer) {
-        executor.execute(() -> {
+        EXECUTOR.execute(() -> {
             ResultSet result = sql.query(statement);
 
             consumer.accept(result);
@@ -61,19 +62,15 @@ public class AsyncMySQL {
     }
 
     public void query(String statement, Consumer<ResultSet> consumer) {
-        executor.execute(() -> {
+        EXECUTOR.execute(() -> {
             ResultSet result = sql.query(statement);
             consumer.accept(result);
         });
     }
 
+    @SneakyThrows
     public PreparedStatement prepare(String query) {
-        try {
-            return sql.getConnection().prepareStatement(query);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return sql.getConnection().prepareStatement(query);
     }
 
     public MySQL getMySQL() {
