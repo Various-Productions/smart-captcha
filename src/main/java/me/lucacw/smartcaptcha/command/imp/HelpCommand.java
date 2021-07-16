@@ -27,7 +27,7 @@ public final class HelpCommand extends AbstractCommand {
     private final DefaultMessagePhraseConfig defaultMessagePhraseConfig;
 
     public HelpCommand(CommandHandler commandHandler, GuildSettingsCacheProvider guildSettingsCacheProvider, DefaultMessagePhraseConfig defaultMessagePhraseConfig) {
-        super("help", "Show the help menu.", "$help", new String[]{"support"});
+        super("help", "Show the help menu.", "%prefix%help", new String[]{"support"});
         this.commandHandler = commandHandler;
         this.guildSettingsCacheProvider = guildSettingsCacheProvider;
         this.defaultMessagePhraseConfig = defaultMessagePhraseConfig;
@@ -39,7 +39,7 @@ public final class HelpCommand extends AbstractCommand {
                 .timestamp(Instant.now())
                 .color(Color.decode("#2b3e51"))
                 .title("Smart Captcha | Help Menu")
-                .description("If you need some extra help just join our discord server: https://discord.gg/Sqq8XS3 and ask in support.")
+                .description("If you need extra help join our discord server and ask us for support. https://discord.gg/Sqq8XS3")
                 .footer(EasyEmbed.Footer.builder().text(this.defaultMessagePhraseConfig.getDefaultFooter()).build())
                 .build();
 
