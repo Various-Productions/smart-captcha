@@ -14,6 +14,10 @@ import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author ShortyDev
+ * @project mcprotection-ticket-bot
+ */
 @Setter
 @Builder
 public final class EasyEmbed {

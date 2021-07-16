@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 /**
- * @author Luca R. at 14.07.2021
- * @project smart-captcha
+ * @author ShortyDev
+ * @project mcprotection-ticket-bot
  */
 @CommonsLog
 public final class AsyncMySQL {
