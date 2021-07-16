@@ -27,7 +27,7 @@ public final class HelpCommand extends AbstractCommand {
     private final DefaultMessagePhraseConfig defaultMessagePhraseConfig;
 
     public HelpCommand(CommandHandler commandHandler, GuildSettingsCacheProvider guildSettingsCacheProvider, DefaultMessagePhraseConfig defaultMessagePhraseConfig) {
-        super("help", "Show the help menu.", "$help", new String[]{"support"});
+        super("help", "Show the help menu.", "%prefix%help", new String[]{"support"});
         this.commandHandler = commandHandler;
         this.guildSettingsCacheProvider = guildSettingsCacheProvider;
         this.defaultMessagePhraseConfig = defaultMessagePhraseConfig;
