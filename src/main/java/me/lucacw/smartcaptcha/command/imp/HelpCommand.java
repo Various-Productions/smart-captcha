@@ -39,7 +39,7 @@ public final class HelpCommand extends AbstractCommand {
                 .timestamp(Instant.now())
                 .color(Color.decode("#2b3e51"))
                 .title("Smart Captcha | Help Menu")
-                .description("If you need some extra help just join our discord server: https://discord.gg/Sqq8XS3 and ask in support.")
+                .description("If you need extra help join our discord server and ask us for support. https://discord.gg/Sqq8XS3")
                 .footer(EasyEmbed.Footer.builder().text(this.defaultMessagePhraseConfig.getDefaultFooter()).build())
                 .build();
 

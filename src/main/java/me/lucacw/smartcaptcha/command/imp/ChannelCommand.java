@@ -19,7 +19,7 @@ public final class ChannelCommand extends AbstractCommand {
     private final GuildSettingsCacheProvider guildSettingsCacheProvider;
 
     public ChannelCommand(GuildSettingsCacheProvider guildSettingsCacheProvider) {
-        super("channel", "Set the channel for verification messages.", "%prefix%channel #<Channel>", new String[]{"setchannel", "verificationchannel", "verifychannel"});
+        super("channel", "Set the channel for the verification commands.", "%prefix%channel #<Channel>", new String[]{"setchannel", "verificationchannel", "verifychannel"});
         this.guildSettingsCacheProvider = guildSettingsCacheProvider;
     }
 
@@ -47,7 +47,7 @@ public final class ChannelCommand extends AbstractCommand {
             guildSettings.setVerificationChannelId(textChannel.getId());
 
             this.guildSettingsCacheProvider.updateGuildSettings(guildSettings);
-            channel.sendMessage("You changed the channel for verification messages to " + textChannel.getAsMention() + ".").queue();
+            channel.sendMessage("You set the channel for the verification commands to " + textChannel.getAsMention() + ".").queue();
         });
     }
 }

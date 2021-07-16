@@ -70,7 +70,7 @@ public class Captcha {
                             .timestamp(Instant.now())
                             .color(Color.decode("#2b3e51"))
                             .title("Captcha Auth | " + guild.getName())
-                            .description("You need to send the captcha code here. If you need help, feel free to contact a staff member.")
+                            .description("Please send the captcha code in this channel. If you need help, feel free to contact a staff member.")
                             .footer(EasyEmbed.Footer.builder().text(DEFAULT_MESSAGE_PHRASE_CONFIG.getDefaultFooter()).build())
                             .imageUrl("attachment://" + this.imageUUID + ".png")
                             .build().buildMessage();
@@ -90,7 +90,7 @@ public class Captcha {
                                         .timestamp(Instant.now())
                                         .color(Color.RED)
                                         .title("Captcha Verify | " + guild.getName())
-                                        .description(StringUtils.format("Please turn on your direct messages like it is shown in the image. After this type ``%prefix%verify`` in this channel.",
+                                        .description(StringUtils.format("Please turn your direct messages on as shown in the image. After this type ``%prefix%verify`` in this channel.",
                                                 "%prefix%", guildSettings.getPrefix()))
                                         .imageUrl("https://img.inwabel.de/Lh9rEGbV")
                                         .footer(EasyEmbed.Footer.builder().text(DEFAULT_MESSAGE_PHRASE_CONFIG.getDefaultFooter()).build())

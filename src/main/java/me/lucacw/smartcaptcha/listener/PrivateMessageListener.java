@@ -61,7 +61,7 @@ public final class PrivateMessageListener extends ListenerAdapter {
                             final MessageEmbed messageEmbed = EasyEmbed.builder()
                                     .timestamp(Instant.now())
                                     .title("Successfully Verified | " + guild.getName())
-                                    .description("You got successfully verified on the server **" + guild.getName() + "**.")
+                                    .description("Success! You are now verified on **" + guild.getName() + "**.")
                                     .color(Color.GREEN)
                                     .footer(EasyEmbed.Footer.builder().text(this.defaultMessagePhraseConfig.getDefaultFooter()).build())
                                     .build().buildMessage();
@@ -73,13 +73,15 @@ public final class PrivateMessageListener extends ListenerAdapter {
                         }, new ErrorHandler());
             });
         } else {
+            int attempts = 3 - captcha.getAttempts();
+            
             final MessageEmbed messageEmbed = EasyEmbed.builder()
                     .timestamp(Instant.now())
                     .color(Color.RED)
                     .title("Captcha Auth | Failed (" + captcha.getAttempts() + "/3) ")
                     .description(captcha.getAttempts() < 3
-                            ? "You failed a authentication try! But you have another " + (3 - captcha.getAttempts()) + " try. Please pay also attention to upper and lower case."
-                            : "Because you failed too often, you get another code!")
+                            ? "Captcha failed! You have " + attempts + " attempt" + (attempts != 1 ? "s" : "") + " left. Please pay attention, it's case sensitive."
+                            : "Captcha failed too often, please enter the new code.")
                     .footer(EasyEmbed.Footer.builder().text(this.defaultMessagePhraseConfig.getDefaultFooter()).build())
                     .build().buildMessage();
 

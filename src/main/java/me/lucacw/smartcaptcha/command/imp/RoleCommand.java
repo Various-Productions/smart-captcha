@@ -16,7 +16,7 @@ public final class RoleCommand extends AbstractCommand {
     private final GuildSettingsCacheProvider guildSettingsCacheProvider;
 
     public RoleCommand(GuildSettingsCacheProvider guildSettingsCacheProvider) {
-        super("role", "Set the role which verified user will receive. ", "%prefix%role @<Role>", new String[]{"changerole", "setrole"});
+        super("role", "Set the role that verified users received.", "%prefix%role @<Role>", new String[]{"changerole", "setrole"});
         this.guildSettingsCacheProvider = guildSettingsCacheProvider;
     }
 
@@ -44,7 +44,7 @@ public final class RoleCommand extends AbstractCommand {
             guildSettings.setMemberRoleId(role.getId());
 
             this.guildSettingsCacheProvider.updateGuildSettings(guildSettings);
-            channel.sendMessage("You changed the member role to " + role.getAsMention() + ".").queue();
+            channel.sendMessage("You changed the verified member role to " + role.getAsMention() + ".").queue();
         });
     }
 }

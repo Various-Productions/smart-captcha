@@ -20,7 +20,7 @@ public final class ShardsCommand extends AbstractCommand {
     private final ShardManager shardManager;
 
     public ShardsCommand(BotSettingsConfig botSettingsConfig, ShardManager shardManager) {
-        super("shards", "Displays the current shards.", "%prefix%shards", new String[]{}, true);
+        super("shards", "Displays the amount shards online.", "%prefix%shards", new String[]{}, true);
         this.botSettingsConfig = botSettingsConfig;
         this.shardManager = shardManager;
     }
@@ -32,6 +32,6 @@ public final class ShardsCommand extends AbstractCommand {
 
         if (!this.botSettingsConfig.getAdmins().contains(memberId)) return;
 
-        channel.sendMessage("Current shards online: " + this.shardManager.getShardsRunning()).queue();
+        channel.sendMessage("Current online shards: " + this.shardManager.getShardsRunning()).queue();
     }
 }
