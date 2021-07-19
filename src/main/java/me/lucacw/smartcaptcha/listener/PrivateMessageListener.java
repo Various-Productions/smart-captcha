@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.ErrorResponse;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -68,13 +69,27 @@ public final class PrivateMessageListener extends ListenerAdapter {
 
                             channel.sendMessage(messageEmbed)
                                     .queue(unused1 -> {
-                                        this.captchaProvider.removeCaptcha(author.getId());
+
                                     }, new ErrorHandler());
-                        }, new ErrorHandler());
+                        }, new ErrorHandler()
+                                .handle(ErrorResponse.MISSING_PERMISSIONS, missingPermissions -> {
+                                    final MessageEmbed errorEmbed = EasyEmbed.builder()
+                                            .timestamp(Instant.now())
+                                            .title("Error | " + guild.getName())
+                                            .description("Error! The bot doesn't have enough permissions to give you the member role. Please contact a staff member!")
+                                            .color(Color.RED)
+                                            .footer(EasyEmbed.Footer.builder().text(this.defaultMessagePhraseConfig.getDefaultFooter()).build())
+                                            .build().buildMessage();
+
+                                    channel.sendMessage(errorEmbed)
+                                            .queue(unused -> {
+                                            }, new ErrorHandler());
+                                }));
+                this.captchaProvider.removeCaptcha(author.getId());
             });
         } else {
             int attempts = 3 - captcha.getAttempts();
-            
+
             final MessageEmbed messageEmbed = EasyEmbed.builder()
                     .timestamp(Instant.now())
                     .color(Color.RED)
