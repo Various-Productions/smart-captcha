@@ -7,7 +7,7 @@ import lombok.Getter;
  * @project smart-captcha
  */
 @Getter
-public final class SimpleCaptchaResult<T> {
+public final class ResponseEntity<T> {
 
     private final T body;
 
@@ -15,23 +15,23 @@ public final class SimpleCaptchaResult<T> {
     private final String[] replacements;
     private final String message;
 
-    public SimpleCaptchaResult() {
+    public ResponseEntity() {
         this(null, true, null);
     }
 
-    public SimpleCaptchaResult(final T body) {
+    public ResponseEntity(final T body) {
         this(body, body != null, null);
     }
 
-    public SimpleCaptchaResult(final String message) {
+    public ResponseEntity(final String message) {
         this(null, false, message);
     }
 
-    public SimpleCaptchaResult(final String message, final String... replacements) {
+    public ResponseEntity(final String message, final String... replacements) {
         this(null, false, message, replacements);
     }
 
-    public SimpleCaptchaResult(final T body, final boolean successful, final String message, final String... replacements) {
+    public ResponseEntity(final T body, final boolean successful, final String message, final String... replacements) {
         this.body = body;
         this.replacements = replacements;
         this.successful = successful;

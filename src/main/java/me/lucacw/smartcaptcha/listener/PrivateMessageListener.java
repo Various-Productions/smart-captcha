@@ -7,7 +7,7 @@ import me.lucacw.smartcaptcha.captcha.Captcha;
 import me.lucacw.smartcaptcha.captcha.CaptchaProvider;
 import me.lucacw.smartcaptcha.config.imp.DefaultMessagePhraseConfig;
 import me.lucacw.smartcaptcha.embed.EasyEmbed;
-import me.lucacw.smartcaptcha.utils.SimpleCaptchaResult;
+import me.lucacw.smartcaptcha.utils.ResponseEntity;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
@@ -104,7 +104,7 @@ public final class PrivateMessageListener extends ListenerAdapter {
 
             if (captcha.getAttempts() >= 3) {
                 this.captchaProvider.removeCaptcha(author.getId());
-                final SimpleCaptchaResult<Captcha> result = this.captchaProvider.createCaptcha(author.getId(), captcha.getGuildID());
+                final ResponseEntity<Captcha> result = this.captchaProvider.createCaptcha(author.getId(), captcha.getGuildID());
 
                 if (!result.isSuccessful()) return;
 

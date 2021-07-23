@@ -14,15 +14,15 @@ import java.util.List;
 @Data
 public class BotSettingsConfig {
 
-    private String token;
+    private final String token;
 
-    private Activity.ActivityType activityType;
-    private String activity;
-    private OnlineStatus onlineStatus;
+    private final Activity.ActivityType activityType;
+    private final String activity;
+    private final OnlineStatus onlineStatus;
 
-    private List<String> admins;
-    private List<Integer> shards;
-    private int totalShards;
+    private final List<String> admins;
+    private final List<Integer> shards;
+    private final int totalShards;
 
     public BotSettingsConfig() {
         this.token = "YOUR_TOKEN";

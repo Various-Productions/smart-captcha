@@ -5,6 +5,7 @@ import me.lucacw.smartcaptcha.config.JsonConfig;
 import me.lucacw.smartcaptcha.config.imp.BotSettingsConfig;
 import me.lucacw.smartcaptcha.config.imp.DefaultMessagePhraseConfig;
 import me.lucacw.smartcaptcha.config.imp.MySQLDatabaseConfig;
+import me.lucacw.smartcaptcha.config.imp.ServerSettingsConfig;
 import me.lucacw.smartcaptcha.database.AsyncMySQL;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -23,10 +24,12 @@ public final class SmartCaptchaBeans {
     private static final JsonConfig<MySQLDatabaseConfig> MYSQL_CONFIG = new JsonConfig<>(MySQLDatabaseConfig.class, "mysql.json");
     private static final JsonConfig<BotSettingsConfig> BOT_SETTINGS_CONFIG = new JsonConfig<>(BotSettingsConfig.class, "bot.json");
     private static final JsonConfig<DefaultMessagePhraseConfig> DEFAULT_MESSAGE_CONFIG = new JsonConfig<>(DefaultMessagePhraseConfig.class, "defaultMessages.json");
+    private static final JsonConfig<ServerSettingsConfig> SERVER_SETTINGS_CONFIG = new JsonConfig<>(ServerSettingsConfig.class, "server.json");
 
     private final MySQLDatabaseConfig mySQLDatabaseConfig = MYSQL_CONFIG.getConfig();
     private final BotSettingsConfig botSettingsConfig = BOT_SETTINGS_CONFIG.getConfig();
     private final DefaultMessagePhraseConfig defaultMessageConfig = DEFAULT_MESSAGE_CONFIG.getConfig();
+    private final ServerSettingsConfig serverSettingsConfig = SERVER_SETTINGS_CONFIG.getConfig();
 
     private final AsyncMySQL mysql = new AsyncMySQL(MYSQL_CONFIG.getConfig());
 
@@ -67,6 +70,11 @@ public final class SmartCaptchaBeans {
     @Bean
     public DefaultMessagePhraseConfig defaultMessageConfig() {
         return this.defaultMessageConfig;
+    }
+
+    @Bean
+    public ServerSettingsConfig serverSettingsConfig() {
+        return this.serverSettingsConfig;
     }
 
 }

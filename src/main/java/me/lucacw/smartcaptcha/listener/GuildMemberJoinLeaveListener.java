@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import lombok.extern.apachecommons.CommonsLog;
 import me.lucacw.smartcaptcha.captcha.Captcha;
 import me.lucacw.smartcaptcha.captcha.CaptchaProvider;
-import me.lucacw.smartcaptcha.utils.SimpleCaptchaResult;
+import me.lucacw.smartcaptcha.utils.ResponseEntity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
@@ -30,13 +30,13 @@ public final class GuildMemberJoinLeaveListener extends ListenerAdapter {
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         final User user = event.getUser();
         final Guild guild = event.getGuild();
-        final SimpleCaptchaResult<Captcha> simpleCaptchaResult = this.captchaProvider.createCaptcha(user.getId(), guild.getId());
+        final ResponseEntity<Captcha> responseEntity = this.captchaProvider.createCaptcha(user.getId(), guild.getId());
 
-        if (!simpleCaptchaResult.isSuccessful()) {
+        if (!responseEntity.isSuccessful()) {
             return;
         }
 
-        simpleCaptchaResult.getBody().send(user, guild);
+        responseEntity.getBody().send(user, guild);
     }
 
     @Override

@@ -4,7 +4,7 @@ import me.lucacw.smartcaptcha.cache.GuildSettingsCacheProvider;
 import me.lucacw.smartcaptcha.captcha.Captcha;
 import me.lucacw.smartcaptcha.captcha.CaptchaProvider;
 import me.lucacw.smartcaptcha.command.AbstractCommand;
-import me.lucacw.smartcaptcha.utils.SimpleCaptchaResult;
+import me.lucacw.smartcaptcha.utils.ResponseEntity;
 import net.dv8tion.jda.api.entities.*;
 import org.springframework.stereotype.Component;
 
@@ -40,13 +40,13 @@ public final class VerifyCommand extends AbstractCommand {
             if (guildSettings.getMemberRoleId() == null) return;
             if (member.getRoles().stream().anyMatch(role -> role.getId().equals(guildSettings.getMemberRoleId()))) return;
 
-            final SimpleCaptchaResult<Captcha> simpleCaptchaResult = this.captchaProvider.createCaptcha(memberId, guild.getId());
+            final ResponseEntity<Captcha> responseEntity = this.captchaProvider.createCaptcha(memberId, guild.getId());
 
-            if (!simpleCaptchaResult.isSuccessful()) {
+            if (!responseEntity.isSuccessful()) {
                 return;
             }
 
-            simpleCaptchaResult.getBody().send(user, guild);
+            responseEntity.getBody().send(user, guild);
         });
     }
 }

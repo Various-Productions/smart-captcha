@@ -4,13 +4,12 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import me.lucacw.smartcaptcha.database.handler.CaptchaLogSqlHandler;
-import me.lucacw.smartcaptcha.utils.SimpleCaptchaResult;
+import me.lucacw.smartcaptcha.utils.ResponseEntity;
 import me.lucacw.smartcaptcha.utils.ImageUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,8 +30,8 @@ public final class CaptchaProvider {
     }
 
     @SneakyThrows
-    public SimpleCaptchaResult<Captcha> createCaptcha(String id, String guildID) {
-        if (this.captchaMap.containsKey(id)) return new SimpleCaptchaResult<>("captcha.existing");
+    public ResponseEntity<Captcha> createCaptcha(String id, String guildID) {
+        if (this.captchaMap.containsKey(id)) return new ResponseEntity<>("captcha.existing");
 
         final UUID uuid = UUID.randomUUID();
         final String code = RandomStringUtils.randomAlphanumeric(5);
@@ -42,7 +41,7 @@ public final class CaptchaProvider {
         final Captcha captcha = new Captcha(bufferedImage, guildID, id, code, uuid);
 
         this.captchaMap.put(id, captcha);
-        return new SimpleCaptchaResult<>(captcha);
+        return new ResponseEntity<>(captcha);
     }
 
     public void removeCaptcha(String id) {

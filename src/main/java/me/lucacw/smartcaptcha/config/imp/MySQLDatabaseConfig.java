@@ -9,12 +9,12 @@ import lombok.Data;
 @Data
 public class MySQLDatabaseConfig {
 
-    private int port;
-    private String hostname;
+    private final int port;
+    private final String hostname;
 
-    private String username;
-    private String password;
-    private String database;
+    private final String username;
+    private final String password;
+    private final String database;
 
     public MySQLDatabaseConfig() {
         this.port = 3306;

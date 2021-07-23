@@ -9,11 +9,11 @@ import lombok.Data;
 @Data
 public class DefaultMessagePhraseConfig {
 
-    private String defaultFooter;
-    private String defaultFooterIconUrl;
+    private final String defaultFooter;
+    private final String defaultFooterIconUrl;
 
-    private String defaultAuthorIconUrl;
-    private String defaultAuthor;
+    private final String defaultAuthorIconUrl;
+    private final String defaultAuthor;
 
     public DefaultMessagePhraseConfig() {
         this.defaultFooter = "smart-captcha | developed by LucaCW#0023";
