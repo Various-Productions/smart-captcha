@@ -3,12 +3,12 @@ package me.lucacw.smartcaptcha.database;
 import lombok.Builder;
 import lombok.SneakyThrows;
 import lombok.extern.apachecommons.CommonsLog;
-import me.lucacw.smartcaptcha.config.imp.MySQLDatabaseConfig;
 
 import java.sql.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
+import me.lucacw.smartcaptcha.config.imp.*;
 
 /**
  * @author ShortyDev
@@ -86,11 +86,11 @@ public final class AsyncMySQL {
         private final String database;
         private final int port;
 
-        private Connection conn;
+        private Connection connection;
 
         public void queryUpdate(String query) {
             checkConnection();
-            try (PreparedStatement statement = conn.prepareStatement(query)) {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 queryUpdate(statement);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -115,7 +115,7 @@ public final class AsyncMySQL {
         public ResultSet query(String query) {
             checkConnection();
             try {
-                return query(conn.prepareStatement(query));
+                return query(connection.prepareStatement(query));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -133,12 +133,12 @@ public final class AsyncMySQL {
         }
 
         public Connection getConnection() {
-            return this.conn;
+            return this.connection;
         }
 
         private void checkConnection() {
             try {
-                if (this.conn == null || !this.conn.isValid(10) || this.conn.isClosed()) openConnection();
+                if (this.connection == null || !this.connection.isValid(10) || this.connection.isClosed()) openConnection();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -147,7 +147,7 @@ public final class AsyncMySQL {
         public void openConnection() {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true", this.user, this.password);
+                this.connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true", this.user, this.password);
                 log.info("MySQL Connection successfully established on " + this.user + "@" + this.host + ":" + this.port);
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
@@ -157,11 +157,11 @@ public final class AsyncMySQL {
 
         public void closeConnection() {
             try {
-                this.conn.close();
+                this.connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                this.conn = null;
+                this.connection = null;
             }
         }
     }
